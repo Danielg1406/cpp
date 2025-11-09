@@ -1,0 +1,9 @@
+# VS Code workspace folder
+.vscode/
+
+# object files and build artifacts
+*.o
+a.out
+
+# macOS Finder
+.DS_Store
