@@ -3,9 +3,9 @@ NAME = phonebook
 CPP = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS = $(wildcard *.cpp)
-OBJS = $(patsubst %.cpp,%.o,$(SRCS))
-INCLUDES = $(wildcard *.hpp)
+SRCS = main.cpp Contact.cpp PhoneBook.cpp
+OBJS = $(SRCS:.cpp=.o)
+INCLUDES = Contact.hpp PhoneBook.hpp
 RM = rm -f
 
 all: $(NAME)
