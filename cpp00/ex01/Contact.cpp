@@ -1,18 +1,20 @@
 #include "Contact.hpp"
 
+// Constructors
 Contact::Contact() {}
+
 Contact::Contact(
-      const std::string &first_name,
-      const std::string &last_name,
+      const std::string &firstName,
+      const std::string &lastName,
       const std::string &nickname,
-      const std::string &phone_number,
-      const std::string &darkest_secret
+      const std::string &phoneNumber,
+      const std::string &darkestSecret
     ) :
-    _first_name(first_name),
-    _last_name(last_name),
+    _firstName(firstName),
+    _lastName(lastName),
     _nickname(nickname),
-    _phone_number(phone_number),
-    _darkest_secret(darkest_secret)
+    _phoneNumber(phoneNumber),
+    _darkestSecret(darkestSecret)
     {}
 
 // Destructor
@@ -21,12 +23,12 @@ Contact::~Contact(){}
 // Getters
 std::string Contact::getFirstName() const
 {
-  return _first_name;
+  return _firstName;
 }
 
 std::string Contact::getLastName() const
 {
-  return _last_name;
+  return _lastName;
 }
 
 std::string Contact::getNickname() const
@@ -36,10 +38,10 @@ std::string Contact::getNickname() const
 
 std::string Contact::getPhoneNumber() const
 {
-  return _phone_number;
+  return _phoneNumber;
 }
 
 std::string Contact::getDarkestSecret() const
 {
-  return _darkest_secret;
+  return _darkestSecret;
 }

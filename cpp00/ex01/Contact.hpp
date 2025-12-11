@@ -5,22 +5,25 @@
 
 class Contact {
   private:
-    std::string _first_name;
-    std::string _last_name;
+    std::string _firstName;
+    std::string _lastName;
     std::string _nickname;
-    std::string _phone_number;
-    std::string _darkest_secret;
+    std::string _phoneNumber;
+    std::string _darkestSecret;
 
   public:
+    // Default Constructor
     Contact();
+
     // Parameterized Constructor
     Contact(
-      const std::string &first_name,
-      const std::string &last_name,
+      const std::string &firstName,
+      const std::string &lastName,
       const std::string &nickname,
-      const std::string &phone_number,
-      const std::string &darkest_secret
+      const std::string &phoneNumber,
+      const std::string &darkestSecret
     );
+
     // Destructor
     ~Contact();
     
