@@ -107,8 +107,9 @@ void PhoneBook::searchContact()
     exit(0);
   }
 
-  // Convert string to int using stringstream
   std::stringstream ss(input);
+  // The >> operator fails if input starts with non-digits
+  // The eof() check ensures no extra characters remain after the number
   if (!(ss >> id) || !(ss.eof()))
   {
     std::cout << "Invalid index" << std::endl;
