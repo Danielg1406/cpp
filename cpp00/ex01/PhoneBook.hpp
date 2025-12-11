@@ -7,6 +7,9 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <cstdlib>
+#include <sstream>
+#include <climits>
 
 enum IndexOption {
   INCREMENT,
@@ -15,9 +18,9 @@ enum IndexOption {
 
 class PhoneBook {
   private:
-    Contact _contact_list[8];
-    int _contact_index;
-    int _contact_count;
+    Contact _contactList[MAX_CONTACT_AMOUNT];
+    int _contactIndex;
+    int _contactCount;
 
   public:
     // Constructor
@@ -38,6 +41,11 @@ class PhoneBook {
     void setContactCount();
 };
 
-std::string getValidInput(const std::string &prompt);
+// Utils
+std::string getValidInput(const std::string &prompt, bool isPhoneNumber);
+std::string truncateInput(const std::string &input);
+bool validNumber(const std::string &input);
+void displayHeader();
+bool strToInt(const std::string &str, int &num);
 
 #endif

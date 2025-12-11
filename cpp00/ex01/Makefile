@@ -3,7 +3,7 @@ NAME = phonebook
 CPP = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS = main.cpp Contact.cpp PhoneBook.cpp
+SRCS = main.cpp Contact.cpp PhoneBook.cpp utils.cpp
 OBJS = $(SRCS:.cpp=.o)
 INCLUDES = Contact.hpp PhoneBook.hpp
 RM = rm -f

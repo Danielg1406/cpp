@@ -2,7 +2,7 @@
 
 int main(void)
 {
-  PhoneBook my_phonebook;
+  PhoneBook myPhonebook;
   std::string option;
   
   while (true)
@@ -14,13 +14,13 @@ int main(void)
       break;
     }
     if (option == "ADD")
-      my_phonebook.addContact();
+      myPhonebook.addContact();
     else if (option == "SEARCH")
-      my_phonebook.searchContact();
+      myPhonebook.searchContact();
     else if (option == "EXIT")
       break;
     else
       std::cout << "Invalid option" << std::endl;
   }
-  return (0);
+  return 0;
 }
