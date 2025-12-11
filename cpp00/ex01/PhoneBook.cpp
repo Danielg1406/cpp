@@ -58,13 +58,13 @@ void PhoneBook::searchContact()
   int index;
   if (!strToInt(input, index))
   {
-    std::cout << "Invalid index" << std::endl;
+    std::cerr << "Invalid index" << std::endl;
     return;
   }
 
   if (index < 1 || index > totalCount)
   {
-    std::cout << "Index out of range" << std::endl;
+    std::cerr << "Index out of range" << std::endl;
     return;
   }
 

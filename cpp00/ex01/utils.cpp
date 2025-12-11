@@ -27,7 +27,7 @@ std::string getValidInput(const std::string &prompt, bool isPhoneNumber)
             return input;
           else
           {
-            std::cout << "It must contain only digits. Please try again." << std::endl;
+            std::cerr << "It must contain only digits. Please try again." << std::endl;
             continue;
           }
         }
@@ -35,7 +35,7 @@ std::string getValidInput(const std::string &prompt, bool isPhoneNumber)
           return input;
       }
     }
-    std::cout << "Field cannot be empty. Please try again." << std::endl;
+    std::cerr << "Field cannot be empty. Please try again." << std::endl;
   }
 }
 
