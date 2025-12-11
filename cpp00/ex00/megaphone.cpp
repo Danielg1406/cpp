@@ -1,5 +1,5 @@
 #include <iostream>
-#include <cctype>
+#include <string>
 
 int main(int argc, char **argv)
 {
@@ -11,8 +11,9 @@ int main(int argc, char **argv)
     {
       if (i > 1)
         std::cout << " ";
-      for (int j = 0; argv[i][j]; j++)
-        std::cout << (char)std::toupper(argv[i][j]);
+      std::string arg = argv[i];
+      for (char c : arg)
+        std::cout << (char)std::toupper(c);
     }
   }
   std::cout << std::endl;
