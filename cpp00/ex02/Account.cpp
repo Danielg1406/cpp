@@ -1,7 +1,7 @@
 #include "Account.hpp"
 #include <iostream>
-#include <vector>
 #include <ctime>
+#include <iomanip>
 
 // Initialize class static variables
 int Account::_nbAccounts = 0;
@@ -33,7 +33,12 @@ void  Account::_displayTimestamp()
 {
   std::time_t t = std::time(0);   // Get the time now
   std::tm* now = std::localtime(&t);
-  std::cout << '[' << (now->tm_year + 1900) << (now->tm_mon + 1) << now->tm_mday << '_' << now->tm_hour << now->tm_min << now->tm_sec << ']';
+  std::cout << '[' << (now->tm_year + 1900) 
+            << std::setfill('0') << std::setw(2) << (now->tm_mon + 1) 
+            << std::setw(2) << now->tm_mday << '_' 
+            << std::setw(2) << now->tm_hour 
+            << std::setw(2) << now->tm_min 
+            << std::setw(2) << now->tm_sec << ']';
 }
 
 // [19920104_091532] accounts:8;total:20049;deposits:0;withdrawals:0
@@ -62,7 +67,7 @@ bool	Account::makeWithdrawal( int withdrawal )
 {
   _displayTimestamp();
   int oldAmount = _amount;
-  std::cout << " index:" << _accountIndex << ";p_amount:" << oldAmount << ";withdrawal:" << withdrawal;
+  std::cout << " index:" << _accountIndex << ";p_amount:" << oldAmount;
   if (checkAmount() < withdrawal)
   {
     std::cout << ";withdrawal:refused" << std::endl;
@@ -72,7 +77,7 @@ bool	Account::makeWithdrawal( int withdrawal )
   _amount -= withdrawal;
   _totalNbWithdrawals++;
   _totalAmount -= withdrawal;
-  std::cout << ";amount:" << _amount << ";nb_withdrawals:" << _nbWithdrawals << std::endl;
+  std::cout << ";withdrawal:" << withdrawal << ";amount:" << _amount << ";nb_withdrawals:" << _nbWithdrawals << std::endl;
   return true;
 }
 
