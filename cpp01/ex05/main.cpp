@@ -2,25 +2,26 @@
 
 int main(void)
 {
-    Harl harl;
+  Harl karen;
 
-    std::cout << "---- Testing levels ----" << std::endl;
-    std::cout << std::endl;
+  std::cout << "---- Testing DEBUG ----" << std::endl;
+  karen.complain("DEBUG");
+  std::cout << std::endl;
 
-    harl.complain("DEBUG");
-    harl.complain("INFO");
-    harl.complain("WARNING");
-    harl.complain("ERROR");
+  std::cout << "---- Testing INFO ----" << std::endl;
+  karen.complain("INFO");
+  std::cout << std::endl;
 
-    std::cout << "=== Testing invalid level ===" << std::endl;
-    std::cout << std::endl;
-    harl.complain("INVALID");
+  std::cout << "---- Testing WARNING ----" << std::endl;
+  karen.complain("WARNING");
+  std::cout << std::endl;
 
-    std::cout << "=== Testing random order ===" << std::endl;
-    std::cout << std::endl;
-    harl.complain("ERROR");
-    harl.complain("DEBUG");
-    harl.complain("WARNING");
+  std::cout << "---- Testing ERROR ----" << std::endl;
+  karen.complain("ERROR");
+  std::cout << std::endl;
 
-    return 0;
+  std::cout << "---- Testing Invalid Level ----" << std::endl;
+  karen.complain("INVALID");
+
+  return 0;
 }

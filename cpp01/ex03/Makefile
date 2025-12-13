@@ -3,8 +3,9 @@ NAME = violence
 CPP = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS = $(wildcard *.cpp)
-OBJS = $(patsubst %.cpp,%.o,$(SRCS))
+SRCS = main.cpp Weapon.cpp HumanA.cpp HumanB.cpp
+OBJS = $(SRCS:.cpp=.o)
+INCLUDES = Weapon.hpp HumanA.hpp HumanB.hpp
 RM = rm -f
 
 all: $(NAME)

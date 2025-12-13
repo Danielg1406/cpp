@@ -3,9 +3,9 @@ NAME = moar_brainz
 CPP = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS = $(wildcard *.cpp)
-OBJS = $(patsubst %.cpp,%.o,$(SRCS))
-INCLUDES = $(wildcard *.hpp)
+SRCS = main.cpp Zombie.cpp zombieHorde.cpp
+OBJS = $(SRCS:.cpp=.o)
+INCLUDES = Zombie.hpp
 RM = rm -f
 
 all: $(NAME)

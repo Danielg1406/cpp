@@ -1,83 +1,54 @@
 #include <iostream>
-#include <fstream>
 #include <string>
+#include <fstream>
 
-std::string replaceAll(const std::string& content, const std::string& s1, const std::string& s2)
+void myReplaceStr(std::string &line, size_t pos, size_t len, const std::string &replacement)
 {
-    std::string result;
-    size_t pos = 0;
-    size_t found;
-
-    if (s1.empty())
-        return content;
-
-    while (pos < content.length())
-    {
-        found = content.find(s1, pos);
-        if (found == std::string::npos)
-        {
-            result.append(content, pos, content.length() - pos);
-            break;
-        }
-        result.append(content, pos, found - pos);
-        result.append(s2);
-        pos = found + s1.length();
-    }
-    return result;
+  line.erase(pos, len);
+  line.insert(pos, replacement);
 }
 
 int main(int argc, char **argv)
 {
-    if (argc != 4)
-    {
-        std::cerr << "Usage: " << argv[0] << " <filename> <s1> <s2>" << std::endl;
-        return 1;
-    }
-
-    std::string filename = argv[1];
-    std::string s1 = argv[2];
-    std::string s2 = argv[3];
-
-    if (s1.empty())
-    {
-        std::cerr << "Error: s1 cannot be empty" << std::endl;
-        return 1;
-    }
-
-    // Open input file
-    std::ifstream infile(filename.c_str());
-    if (!infile.is_open())
-    {
-        std::cerr << "Error: Could not open file " << filename << std::endl;
-        return 1;
-    }
-
-    // Read entire file content
-    std::string content;
+  if (argc != 4)
+  {
+    std::cerr << "Error! Usage: <filename> <string1> <sting2>" << std::endl;
+    return 1;
+  }
+  // Open file
+  std::string fileName = argv[1];
+  std::ifstream inputStream(fileName.c_str());
+  if (!inputStream)
+  {
+    std::cerr << "Can't open input file" << std::endl;
+    return 1;
+  }
+  std::string replaceFileName = fileName + ".replace";
+  std::ofstream replaceFile(replaceFileName.c_str());
+  if (!replaceFile)
+  {
+    std::cerr << "Could not create file" << std::endl;
+    return 1;
+  }
+  if (inputStream && replaceFile)
+  {
+    // Read file
     std::string line;
-    while (std::getline(infile, line))
+    while(getline (inputStream, line))
     {
-        content += line;
-        if (!infile.eof())
-            content += '\n';
+      // Replace str1 for str2
+      std::string str1 = argv[2];
+      std::string str2 = argv[3];
+      size_t pos = line.find(str1);
+      while (pos != std::string::npos)
+      {
+        myReplaceStr(line, pos, str1.size(), str2);
+        pos = line.find(str1, pos + str2.size());
+      }
+      replaceFile << line << std::endl;
     }
-    infile.close();
-
-    // Replace all occurrences
-    std::string result = replaceAll(content, s1, s2);
-
-    // Write to output file
-    std::string outfilename = filename + ".replace";
-    std::ofstream outfile(outfilename.c_str());
-    if (!outfile.is_open())
-    {
-        std::cerr << "Error: Could not create file " << outfilename << std::endl;
-        return 1;
-    }
-
-    outfile << result;
-    outfile.close();
-
-    std::cout << "File processed successfully: " << outfilename << std::endl;
-    return 0;
+  }
+  inputStream.close();
+  replaceFile.close();
+  return 0;
 }

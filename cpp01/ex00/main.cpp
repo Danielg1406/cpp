@@ -2,14 +2,15 @@
 
 int main(void)
 {
-  Zombie  *heap_zombie = newZombie("Zombie in the Heap");
-  heap_zombie->announce();
+  std::cout << "Creating Zombie in Heap" << std::endl;
+  Zombie *heapZombie = newZombie("Heap Zombie");
+  heapZombie->announce();
 
-  // Stack allocation - dies when out of scope
-  randomChump("Zombie in the Stack");
+  std::cout << "Creating Zombie in Stack" << std::endl;
+  randomChump("Stack Zombie");
 
-  // Heap allocation must be manually deleted
-  delete heap_zombie;
+  std::cout << "It's time to free some space in Heap" << std::endl;
+  delete heapZombie;
   std::cout << "No memory leaking Zombie left :)" << std::endl;
   return 0;
 }

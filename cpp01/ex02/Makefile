@@ -1,10 +1,10 @@
-NAME = string
+NAME = hi_brain
 
 CPP = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS = $(wildcard *.cpp)
-OBJS = $(patsubst %.cpp,%.o,$(SRCS))
+SRCS = main.cpp
+OBJS = $(SRCS:.cpp=.o)
 RM = rm -f
 
 all: $(NAME)
@@ -12,7 +12,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CPP) $(CFLAGS) $(OBJS) -o $(NAME)
 
-%.o: %.cpp $(INCLUDES)
+%.o: %.cpp
 	$(CPP) $(CFLAGS) -c $< -o $@
 
 clean:
