@@ -1,23 +1,27 @@
 NAME = forms
 
+CPP = c++
+CFLAGS = -Wall -Wextra -Werror -std=c++98
+
 SRCS = Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp main.cpp
 OBJS = $(SRCS:.cpp=.o)
-
-CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+INCLUDES = Bureaucrat.hpp AForm.hpp ShrubberyCreationForm.hpp RobotomyRequestForm.hpp PresidentialPardonForm.hpp
+RM = rm -rf
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CPP) $(CFLAGS) $(OBJS) -o $(NAME)
 
-%.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
+%.o: %.cpp $(INCLUDES)
+	$(CPP) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	$(RM) $(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	$(RM) $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re
