@@ -3,11 +3,11 @@
 
 // Exception Message
 const char* Form::GradeTooHighException::what() const throw() {
-   return "Grade too high!\n";
+	return "Grade too high!";
 }
 
 const char* Form::GradeTooLowException::what() const throw() {
-   return "Grade too low!\n";
+	return "Grade too low!";
 }
 
 // Canonical Form
@@ -16,8 +16,6 @@ Form::Form (const std::string &name, const int gradeToSign, const int gradeToExe
 		throw GradeTooLowException();
 	if (gradeToSign < 1 || gradeToExecute < 1)
 		throw GradeTooHighException();
-//	this->_gradeToSign = gradeToSign;
-//	this->_gradeToExecute = gradeToExecute;
 }
 
 Form::Form(const Form &other)
@@ -29,15 +27,18 @@ Form::Form(const Form &other)
 
 Form& Form::operator=(const Form &other) {
 	if (this != &other)
-	{
 		_isSigned = other.getStatus();
-		_gradeToSign = other.getGradeToSign();
-		_gradeToExecute = other.getGradeToExecute();
-	}
 	return *this;
 }
 
 Form::~Form() {}
+
+// Actions
+void	Form::beSigned(const Bureaucrat &bureaucrat) {
+	if (bureaucrat.getGrade() > this->_gradeToSign)
+		throw GradeTooLowException();
+	this->_isSigned = true;
+}
 
 // Getters
 const std::string	&Form::getName() const {
@@ -60,16 +61,8 @@ int		Form::getGradeToExecute() const {
 
 
 // Operator Overload
-std::ostream&	operator<<(std::ostream &out, const Form form) {
-	if (form.getStatus())
-	{
-		std::string status = " is signed";
-		out << form.getName() << status << ".Required grade to be executed: " << form.getGradeToExecute();
-	}
-	else
-	{
-		std::string status = " is not signed";
-		out << form.getName() << status << ".Required grade to be signed" << form.getGradeToSign() << ", and required grade to be executed: " << form.getGradeToExecute();
-	}
+std::ostream&	operator<<(std::ostream &out, const Form &form) {
+	out << "Form \"" << form.getName() << "\" (signed: " << (form.getStatus() ? "yes" : "no") << ") -- grade to sign: "
+		<< form.getGradeToSign() << ", grade to execute: " << form.getGradeToExecute();
 	return out;
 }
