@@ -4,6 +4,11 @@
 #include "PresidentialPardonForm.hpp"
 #include <iostream>
 
+// Exception Message
+const char* Intern::InvalidFormException::what() const throw() {
+    return "Intern couldn't create form: unknown form name";
+}
+
 // Canonical Form
 Intern::Intern() {}
 
@@ -45,6 +50,5 @@ AForm* Intern::makeForm(const std::string &name, const std::string &target) cons
             return form;
         }
     }
-    std::cout << "Intern couldn't create form: unknown form name\n";
-    return NULL;
+    throw InvalidFormException();
 }

@@ -17,6 +17,11 @@ class Intern
         ~Intern();
 
         AForm* makeForm(const std::string &name, const std::string &target) const;
+
+        class InvalidFormException : public std::exception {
+            public:
+                virtual const char* what() const throw();
+        };
 };
 
 #endif
