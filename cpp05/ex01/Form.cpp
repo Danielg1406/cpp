@@ -57,9 +57,6 @@ int		Form::getGradeToExecute() const {
 	return this->_gradeToExecute;
 }
 
-// Setters
-
-
 // Operator Overload
 std::ostream&	operator<<(std::ostream &out, const Form &form) {
 	out << "Form \"" << form.getName() << "\" (signed: " << (form.getStatus() ? "yes" : "no") << ") -- grade to sign: "
