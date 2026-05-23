@@ -43,15 +43,15 @@ int		Bureaucrat::getGrade() const{
 
 // Setters
 void		Bureaucrat::incrementGrade() {
-	if (this->_grade + 1 > 150)
-		throw GradeTooLowException();
-	this->_grade++;
-}
-
-void		Bureaucrat::decrementGrade() {
 	if (this->_grade - 1 < 1)
 		throw GradeTooHighException();
 	this->_grade--;
+}
+
+void		Bureaucrat::decrementGrade() {
+	if (this->_grade + 1 > 150)
+		throw GradeTooLowException();
+	this->_grade++;
 }
 
 void		Bureaucrat::signForm(Form &form) {
