@@ -1,11 +1,11 @@
 #include "Bureaucrat.hpp"
 
 // Exception Message
-const char* Bureaucrat::GradeTooHighException::what() const throw() {
+const char*	Bureaucrat::GradeTooHighException::what() const throw() {
 	return "Grade too high!";
 }
 
-const char* Bureaucrat::GradeTooLowException::what() const throw() {
+const char*	Bureaucrat::GradeTooLowException::what() const throw() {
 	return "Grade too low!";
 }
 
@@ -35,18 +35,18 @@ const std::string	&Bureaucrat::getName() const{
 	return this->_name;
 }
 
-int		Bureaucrat::getGrade() const{
+int	Bureaucrat::getGrade() const{
 	return this->_grade;
 }
 
 // Setters
-void		Bureaucrat::incrementGrade() {
+void	Bureaucrat::incrementGrade() {
 	if (this->_grade - 1 < 1)
 		throw GradeTooHighException();
 	this->_grade--;
 }
 
-void		Bureaucrat::decrementGrade() {
+void	Bureaucrat::decrementGrade() {
 	if (this->_grade + 1 > 150)
 		throw GradeTooLowException();
 	this->_grade++;
