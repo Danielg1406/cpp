@@ -3,7 +3,8 @@
 
 #include "Bureaucrat.hpp"
 
-class Form {
+class Form
+{
 	private:
 		const std::string	_name;
 		bool			_isSigned;
@@ -33,6 +34,6 @@ class Form {
 		};
 };
 
-std::ostream& operator<<(std::ostream &out,const Form &form);
+std::ostream&	operator<<(std::ostream &out,const Form &form);
 
 #endif
