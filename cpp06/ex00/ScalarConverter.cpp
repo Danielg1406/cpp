@@ -35,7 +35,6 @@ static bool isCharLiteral(const std::string& literal) {
 	return (literal.length() == 1 && !std::isdigit(static_cast<unsigned char>(literal[0])));
 }
 
-
 static bool isNan(double value) {
 	return value != value;
 }
