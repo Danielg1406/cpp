@@ -104,17 +104,48 @@ static void assignmentTest()
 	std::cout << "Second top: " << second.top() << std::endl;
 }
 
+static void iteratorTest()
+{
+	std::cout << "\n\t--- ITERATOR ---" << std::endl;
+
+	MutantStack<int> mstack;
+
+	mstack.push(10);
+	mstack.push(20);
+	mstack.push(30);
+	mstack.push(40);
+
+	std::cout << "Forward iterator:" << std::endl;
+
+	MutantStack<int>::iterator it = mstack.begin();
+	MutantStack<int>::iterator ite = mstack.end();
+
+	while (it != ite)
+	{
+		std::cout << *it << std::endl;
+		++it;
+	}
+
+	std::cout << "Modify values through iterator:" << std::endl;
+
+	for (it = mstack.begin(); it != mstack.end(); ++it)
+		*it += 1;
+
+	for (it = mstack.begin(); it != mstack.end(); ++it)
+		std::cout << *it << std::endl;
+}
+
 static void constIteratorTest()
 {
 	std::cout << "\n\t--- CONST ITERATOR ---" << std::endl;
 
-	MutantStack<int> stack;
+	MutantStack<int> mstack;
 
-	stack.push(100);
-	stack.push(200);
-	stack.push(300);
+	mstack.push(100);
+	mstack.push(200);
+	mstack.push(300);
 
-	const MutantStack<int> constStack(stack);
+	const MutantStack<int> constStack(mstack);
 
 	MutantStack<int>::const_iterator it = constStack.begin();
 	MutantStack<int>::const_iterator ite = constStack.end();
@@ -126,13 +157,71 @@ static void constIteratorTest()
 	}
 }
 
+static void reverseIteratorTest()
+{
+	std::cout << "\n\t--- REVERSE ITERATOR ---" << std::endl;
+
+	MutantStack<int> mstack;
+
+	mstack.push(1);
+	mstack.push(2);
+	mstack.push(3);
+	mstack.push(4);
+
+	std::cout << "Normal order:" << std::endl;
+
+	MutantStack<int>::iterator it = mstack.begin();
+	MutantStack<int>::iterator ite = mstack.end();
+
+	while (it != ite)
+	{
+		std::cout << *it << std::endl;
+		++it;
+	}
+
+	std::cout << "Reverse order:" << std::endl;
+
+	MutantStack<int>::reverse_iterator rit = mstack.rbegin();
+	MutantStack<int>::reverse_iterator rite = mstack.rend();
+
+	while (rit != rite)
+	{
+		std::cout << *rit << std::endl;
+		++rit;
+	}
+}
+
+static void constReverseIteratorTest()
+{
+	std::cout << "\n\t--- CONST REVERSE ITERATOR ---" << std::endl;
+
+	MutantStack<int> mstack;
+
+	mstack.push(7);
+	mstack.push(8);
+	mstack.push(9);
+
+	const MutantStack<int> constStack(mstack);
+
+	MutantStack<int>::const_reverse_iterator rit = constStack.rbegin();
+	MutantStack<int>::const_reverse_iterator rite = constStack.rend();
+
+	while (rit != rite)
+	{
+		std::cout << *rit << std::endl;
+		++rit;
+	}
+}
+
 int main()
 {
 	subjectTest();
 	listComparisonTest();
 	copyTest();
 	assignmentTest();
+	iteratorTest();
 	constIteratorTest();
-
+	reverseIteratorTest();
+	constReverseIteratorTest();
 	return 0;
 }
