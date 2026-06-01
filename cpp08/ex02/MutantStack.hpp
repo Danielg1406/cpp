@@ -18,7 +18,7 @@ class MutantStack : public std::stack<T>
     MutantStack(const MutantStack &other) : stack_type(other) {}
     MutantStack &operator=(const MutantStack &other) {
       if (this != &other)
-        this->c = other.c;
+        stack_type::operator=(other);
       return *this;
     }
     ~MutantStack() {}
