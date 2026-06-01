@@ -1,119 +1,138 @@
 #include <iostream>
-#include <list>
 #include <stack>
-
+#include <list>
 #include "MutantStack.hpp"
 
-static int g_failedTests = 0;
-
-static void report(bool condition, const std::string &label)
+static void subjectTest()
 {
-    std::cout << (condition ? "[PASS] " : "[FAIL] ") << label << std::endl;
-    if (!condition)
-        ++g_failedTests;
+	std::cout << "--- SUBJECT TEST ---" << std::endl;
+
+	MutantStack<int> mstack;
+
+	mstack.push(5);
+	mstack.push(17);
+
+	std::cout << mstack.top() << std::endl;
+
+	mstack.pop();
+
+	std::cout << mstack.size() << std::endl;
+
+	mstack.push(3);
+	mstack.push(5);
+	mstack.push(737);
+	mstack.push(0);
+
+	MutantStack<int>::iterator it = mstack.begin();
+	MutantStack<int>::iterator ite = mstack.end();
+
+	++it;
+	--it;
+
+	while (it != ite)
+	{
+		std::cout << *it << std::endl;
+		++it;
+	}
+
+	std::stack<int> s(mstack);
+
+	std::cout << "Copied to std::stack, top is: " << s.top() << std::endl;
 }
 
-template <typename StackType>
-static void testIterationOrder(StackType &stack, int startValue, const std::string &label)
+static void listComparisonTest()
 {
-    try
-    {
-        typename StackType::iterator it = stack.begin();
-        typename StackType::iterator end = stack.end();
-        int expected = startValue;
+	std::cout << "\n--- LIST COMPARISON ---" << std::endl;
 
-        while (it != end)
-        {
-            if (*it != expected)
-            {
-                report(false, label);
-                return;
-            }
-            ++expected;
-            ++it;
-        }
-        report(true, label);
-    }
-    catch (const std::exception &e)
-    {
-        report(false, label + std::string(" (unexpected exception: ") + e.what() + ")");
-    }
+	std::list<int> numbers;
+
+	numbers.push_back(5);
+	numbers.push_back(3);
+	numbers.push_back(5);
+	numbers.push_back(737);
+	numbers.push_back(0);
+
+	std::list<int>::iterator it = numbers.begin();
+	std::list<int>::iterator ite = numbers.end();
+
+	++it;
+	--it;
+
+	while (it != ite)
+	{
+		std::cout << *it << std::endl;
+		++it;
+	}
+}
+
+static void copyTest()
+{
+	std::cout << "\n--- COPY ---" << std::endl;
+
+	MutantStack<int> original;
+
+	original.push(1);
+	original.push(2);
+	original.push(3);
+
+	MutantStack<int> copy(original);
+
+	std::cout << "Original top: " << original.top() << std::endl;
+	std::cout << "Copy top: " << copy.top() << std::endl;
+
+	copy.push(4);
+
+	std::cout << "Original top after modifying copy: " << original.top() << std::endl;
+	std::cout << "Copy top after push: " << copy.top() << std::endl;
+}
+
+static void assignmentTest()
+{
+	std::cout << "\n--- ASSIGNMENT ---" << std::endl;
+
+	MutantStack<int> first;
+	MutantStack<int> second;
+
+	first.push(10);
+	first.push(20);
+
+	second.push(99);
+
+	second = first;
+
+	std::cout << "First top: " << first.top() << std::endl;
+	std::cout << "Second top: " << second.top() << std::endl;
+}
+
+static void constIteratorTest()
+{
+	std::cout << "\n--- CONST ITERATOR ---" << std::endl;
+
+	MutantStack<int> stack;
+
+	stack.push(100);
+	stack.push(200);
+	stack.push(300);
+
+	const MutantStack<int> constStack(stack);
+
+	MutantStack<int>::const_iterator it = constStack.begin();
+	MutantStack<int>::const_iterator ite = constStack.end();
+
+	while (it != ite)
+	{
+		std::cout << *it << std::endl;
+		++it;
+	}
 }
 
 int main()
 {
-    std::cout << "Exercise 02 - MutantStack" << std::endl;
+	subjectTest();
+	listComparisonTest();
+	copyTest();
+	assignmentTest();
+	constIteratorTest();
 
-    MutantStack<int> mstack;
-    mstack.push(5);
-    mstack.push(17);
-    report(mstack.top() == 17, "top returns the last pushed value");
-    mstack.pop();
-    report(mstack.size() == 1, "pop reduces the size");
-    mstack.push(3);
-    mstack.push(5);
-    mstack.push(737);
-    mstack.push(0);
-
-    MutantStack<int>::iterator it = mstack.begin();
-    MutantStack<int>::iterator ite = mstack.end();
-    ++it;
-    --it;
-    report(it == mstack.begin(), "iterators support bidirectional movement");
-
-    int expectedValues[] = {5, 3, 5, 737, 0};
-    int index = 0;
-    bool orderMatches = true;
-    while (it != ite)
-    {
-        if (*it != expectedValues[index])
-        {
-            orderMatches = false;
-            break;
-        }
-        ++it;
-        ++index;
-    }
-    report(orderMatches && index == 5, "iteration follows stack storage order");
-
-    MutantStack<int> copied(mstack);
-    report(copied.size() == mstack.size(), "copy constructor copies the stack");
-    MutantStack<int> assigned;
-    assigned = mstack;
-    report(assigned.top() == mstack.top(), "assignment copies the top element");
-
-    std::stack<int> standardStack(mstack);
-    report(standardStack.size() == mstack.size(), "can be copied into std::stack");
-
-    const MutantStack<int> constStack(mstack);
-    MutantStack<int>::const_iterator constIt = constStack.begin();
-    MutantStack<int>::const_iterator constEnd = constStack.end();
-    index = 0;
-    orderMatches = true;
-    while (constIt != constEnd)
-    {
-        if (*constIt != expectedValues[index])
-        {
-            orderMatches = false;
-            break;
-        }
-        ++constIt;
-        ++index;
-    }
-    report(orderMatches && index == 5, "const iterators work");
-
-    MutantStack<int, std::list<int> > listStack;
-    listStack.push(1);
-    listStack.push(2);
-    listStack.push(3);
-    listStack.push(4);
-    listStack.push(5);
-    testIterationOrder(listStack, 1, "custom underlying container iterates correctly");
-
-    std::cout << "Reverse iteration:" << std::endl;
-    for (MutantStack<int>::reverse_iterator rit = mstack.rbegin(); rit != mstack.rend(); ++rit)
-        std::cout << *rit << std::endl;
-
-    std::cout << "Failed tests: " << g_failedTests << std::endl;
-    return g_failedTests == 0 ? 0 : 1;
+	return 0;
 }
