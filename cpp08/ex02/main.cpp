@@ -5,7 +5,7 @@
 
 static void subjectTest()
 {
-	std::cout << "--- SUBJECT TEST ---" << std::endl;
+	std::cout << "\t--- SUBJECT TEST ---" << std::endl;
 
 	MutantStack<int> mstack;
 
@@ -42,7 +42,7 @@ static void subjectTest()
 
 static void listComparisonTest()
 {
-	std::cout << "\n--- LIST COMPARISON ---" << std::endl;
+	std::cout << "\n\t--- LIST COMPARISON ---" << std::endl;
 
 	std::list<int> numbers;
 
@@ -67,7 +67,7 @@ static void listComparisonTest()
 
 static void copyTest()
 {
-	std::cout << "\n--- COPY ---" << std::endl;
+	std::cout << "\n\t--- COPY ---" << std::endl;
 
 	MutantStack<int> original;
 
@@ -88,7 +88,7 @@ static void copyTest()
 
 static void assignmentTest()
 {
-	std::cout << "\n--- ASSIGNMENT ---" << std::endl;
+	std::cout << "\n\t--- ASSIGNMENT ---" << std::endl;
 
 	MutantStack<int> first;
 	MutantStack<int> second;
@@ -106,7 +106,7 @@ static void assignmentTest()
 
 static void constIteratorTest()
 {
-	std::cout << "\n--- CONST ITERATOR ---" << std::endl;
+	std::cout << "\n\t--- CONST ITERATOR ---" << std::endl;
 
 	MutantStack<int> stack;
 
