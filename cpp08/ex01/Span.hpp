@@ -2,6 +2,7 @@
 #define SPAN_HPP
 
 #include <exception>
+#include <algorithm>
 #include <vector>
 
 class Span
@@ -11,32 +12,32 @@ class Span
     std::vector<int>  _numbers;
   public:
     Span();
-    explicit Span(unsigned int n);
+    Span(unsigned int n);
     Span(const Span &other);
     Span &operator=(const Span &other);
     ~Span();
 
-    void addNumber(int number);
+    void          addNumber(int number);
+    unsigned int  shortestSpan() const;
+    unsigned int  longestSpan() const;
 
-    template <typename InputIterator>
-    void addNumber(InputIterator first, InputIterator last)
+    template <typename Iterator>
+    void addMultiple(Iterator begin, Iterator end)
     {
       unsigned int count = 0;
-      InputIterator it = first;
+      Iterator tmp = begin;
 
-      for (; it != last; ++it)
-        ++count;
-      if (this->_numbers.size() + count > this->_maxSize)
-        throw SpanFullException();
-      for (it = first; it != last; ++it)
-        this->_numbers.push_back(*it);
+      while (tmp != end)
+			{
+				++count;
+				++tmp;
+			}
+
+			if (_numbers.size() + count > _maxSize)
+				throw Span::SpanFullException();
+
+			_numbers.insert(_numbers.end(), begin, end);
     }
-
-    int shortestSpan() const;
-    int longestSpan() const;
-
-    unsigned int size() const;
-    unsigned int capacity() const;
 
     class SpanFullException : public std::exception
     {
