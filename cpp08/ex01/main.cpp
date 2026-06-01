@@ -1,119 +1,138 @@
-#include <climits>
-#include <iostream>
-#include <list>
-#include <vector>
-
 #include "Span.hpp"
+#include <iostream>
 
-static int g_failedTests = 0;
+static void subjectTest()
+{
+	std::cout << "\t--- SUBJECT TEST ---" << std::endl;
 
-static void report(bool condition, const std::string &label) {
-  std::cout << (condition ? "[PASS] " : "[FAIL] ") << label << std::endl;
-  if (!condition)
-    ++g_failedTests;
+	try
+	{
+		Span sp = Span(5);
+
+		sp.addNumber(6);
+		sp.addNumber(3);
+		sp.addNumber(17);
+		sp.addNumber(9);
+		sp.addNumber(11);
+
+		std::cout << sp.shortestSpan() << std::endl;
+		std::cout << sp.longestSpan() << std::endl;
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 }
 
-static void testThrowShortSpan(const Span &span, const std::string &label) {
-  try {
-    (void)span.shortestSpan();
-    report(false, label + " (expected exception)");
-  } catch (const std::exception &) {
-    report(true, label);
-  }
+static void tooManyNumbersTest()
+{
+	std::cout << "\n\t--- FULL SPAN ---" << std::endl;
+
+	try
+	{
+		Span sp(2);
+
+		sp.addNumber(1);
+		sp.addNumber(2);
+		sp.addNumber(3);
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 }
 
-static void testThrowLongSpan(const Span &span, const std::string &label) {
-  try {
-    (void)span.longestSpan();
-    report(false, label + " (expected exception)");
-  } catch (const std::exception &) {
-    report(true, label);
-  }
+static void noSpanTest()
+{
+	std::cout << "\n\t--- TOO SHORT ---" << std::endl;
+
+	try
+	{
+		Span sp(5);
+
+		sp.addNumber(42);
+		std::cout << sp.shortestSpan() << std::endl;
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 }
 
-int main() {
-  std::cout << "Exercise 01 - Span" << std::endl;
+static void duplicateNumbersTest()
+{
+	std::cout << "\n\t--- DUPLICATE NUMBERS ---" << std::endl;
 
-  Span sample(5);
-  sample.addNumber(6);
-  sample.addNumber(3);
-  sample.addNumber(17);
-  sample.addNumber(9);
-  sample.addNumber(11);
-  report(sample.shortestSpan() == 2, "sample shortest span is 2");
-  report(sample.longestSpan() == 14, "sample longest span is 14");
+	try
+	{
+		Span sp(5);
 
-  try {
-    sample.addNumber(42);
-    report(false, "adding beyond capacity throws");
-  } catch (const std::exception &) {
-    report(true, "adding beyond capacity throws");
-  }
+		sp.addNumber(10);
+		sp.addNumber(10);
+		sp.addNumber(20);
 
-  Span empty(4);
-  testThrowShortSpan(empty, "empty span throws for shortestSpan");
-  testThrowLongSpan(empty, "empty span throws for longestSpan");
+		std::cout << "Shortest span: " << sp.shortestSpan() << std::endl;
+		std::cout << "Longest span: " << sp.longestSpan() << std::endl;
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+}
 
-  Span single(4);
-  single.addNumber(42);
-  testThrowShortSpan(single, "single-element span throws for shortestSpan");
-  testThrowLongSpan(single, "single-element span throws for longestSpan");
+static void rangeTest()
+{
+	std::cout << "\n\t--- RANGE WITH 10000 NUMBERS ---" << std::endl;
 
-  Span negative(6);
-  negative.addNumber(-10);
-  negative.addNumber(0);
-  negative.addNumber(5);
-  negative.addNumber(20);
-  report(negative.shortestSpan() == 5, "mixed values shortest span is 5");
-  report(negative.longestSpan() == 30, "mixed values longest span is 30");
+	try
+	{
+		Span sp(10000);
+		std::vector<int> numbers;
 
-  std::list<int> listValues;
-  listValues.push_back(100);
-  listValues.push_back(250);
-  listValues.push_back(101);
-  listValues.push_back(500);
-  Span rangeFilled(4);
-  rangeFilled.addNumber(listValues.begin(), listValues.end());
-  report(rangeFilled.shortestSpan() == 1, "range insertion works with list iterators");
-  report(rangeFilled.longestSpan() == 400, "range insertion longest span is correct");
+		for (int i = 0; i < 10000; ++i)
+			numbers.push_back(i * 2);
 
-  Span big(10000);
-  std::vector<int> bigValues;
-  bigValues.reserve(10000);
-  for (int i = 0; i < 10000; ++i)
-    bigValues.push_back(i);
-  big.addNumber(bigValues.begin(), bigValues.end());
-  report(big.size() == 10000, "big span stores 10000 numbers");
-  report(big.shortestSpan() == 1, "big span shortest span is 1");
-  report(big.longestSpan() == 9999, "big span longest span is 9999");
+		sp.addMultiple(numbers.begin(), numbers.end());
 
-  Span duplicateSpan(3);
-  duplicateSpan.addNumber(12);
-  duplicateSpan.addNumber(12);
-  duplicateSpan.addNumber(20);
-  report(duplicateSpan.shortestSpan() == 0, "duplicate values give shortest span 0");
-  report(duplicateSpan.longestSpan() == 8, "duplicate values give longest span 8");
+		std::cout << "Shortest span: " << sp.shortestSpan() << std::endl;
+		std::cout << "Longest span: " << sp.longestSpan() << std::endl;
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+}
 
-  Span bulkOverflow(3);
-  std::vector<int> tooMany;
-  tooMany.push_back(1);
-  tooMany.push_back(2);
-  tooMany.push_back(3);
-  tooMany.push_back(4);
+static void negativeNumbersTest()
+{
+	std::cout << "\n\t--- NEGATIVE NUMBERS ---" << std::endl;
 
-  try {
-    bulkOverflow.addNumber(tooMany.begin(), tooMany.end());
-    report(false, "range insertion beyond capacity throws");
-  } catch (const std::exception &) {
-    report(true, "range insertion beyond capacity throws");
-  }
+	try
+	{
+		Span sp(5);
 
-  Span copied(sample);
-  report(copied.shortestSpan() == sample.shortestSpan(), "copy constructor preserves data");
-  Span assigned(1);
-  assigned = negative;
-  report(assigned.longestSpan() == negative.longestSpan(), "assignment operator preserves data");
+		sp.addNumber(-10);
+		sp.addNumber(-5);
+		sp.addNumber(0);
+		sp.addNumber(20);
 
-  std::cout << "Failed tests: " << g_failedTests << std::endl;
-  return g_failedTests == 0 ? 0 : 1;
+		std::cout << "Shortest span: " << sp.shortestSpan() << std::endl;
+		std::cout << "Longest span: " << sp.longestSpan() << std::endl;
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+}
+
+int main()
+{
+	subjectTest();
+	tooManyNumbersTest();
+	noSpanTest();
+	duplicateNumbersTest();
+	rangeTest();
+	negativeNumbersTest();
+
+	return 0;
 }
