@@ -1,5 +1,4 @@
 #include <iostream>
-#include <stack>
 #include <list>
 #include "MutantStack.hpp"
 
@@ -28,7 +27,6 @@ static void subjectTest()
 
 	++it;
 	--it;
-
 	while (it != ite)
 	{
 		std::cout << *it << std::endl;
@@ -47,6 +45,14 @@ static void listComparisonTest()
 	std::list<int> numbers;
 
 	numbers.push_back(5);
+	numbers.push_back(17);
+
+	std::cout << numbers.back() << std::endl;
+
+	numbers.pop_back();
+
+	std::cout << numbers.size() << std::endl;
+
 	numbers.push_back(3);
 	numbers.push_back(5);
 	numbers.push_back(737);
@@ -57,12 +63,15 @@ static void listComparisonTest()
 
 	++it;
 	--it;
-
 	while (it != ite)
 	{
 		std::cout << *it << std::endl;
 		++it;
 	}
+
+	std::list<int> s(numbers);
+
+	std::cout << "Copied to std::stack, top is: " << s.back() << std::endl;
 }
 
 static void copyTest()
