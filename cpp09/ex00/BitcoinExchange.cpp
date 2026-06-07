@@ -1,5 +1,6 @@
 #include "BitcoinExchange.hpp"
 
+// Canonical Form
 BitcoinExchange::BitcoinExchange() {}
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &other)
@@ -16,6 +17,7 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other)
 
 BitcoinExchange::~BitcoinExchange() {}
 
+// Helpers
 std::string BitcoinExchange::trim(const std::string &str)
 {
 	std::size_t start = 0;
@@ -41,6 +43,7 @@ int BitcoinExchange::toInt(const std::string &str)
 	return value;
 }
 
+// Checkers
 bool BitcoinExchange::isLeapYear(int year)
 {
 	if (year % 400 == 0)
@@ -81,6 +84,7 @@ bool BitcoinExchange::isValidDate(const std::string &date)
 	return day <= daysInMonth[month - 1];
 }
 
+// Parsing
 double BitcoinExchange::parsePositiveValue(const std::string &value)
 {
 	char *end;
@@ -162,6 +166,7 @@ double BitcoinExchange::getRateForDate(const std::string &date) const
 	return it->second;
 }
 
+// Main processor
 void BitcoinExchange::processInput(const std::string &filename) const
 {
 	std::ifstream file(filename.c_str());
