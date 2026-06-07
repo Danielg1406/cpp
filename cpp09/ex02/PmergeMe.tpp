@@ -26,6 +26,10 @@ bool PmergeMe::containsValue(const Container &container, int value)
 	return false;
 }
 
+/*
+	the sequence starts with 0 and 1, then each following number is found by 
+	adding the number before it to twice the number before that
+*/ 
 template <typename OrderContainer>
 OrderContainer PmergeMe::calcJacobsthal(std::size_t maxInsert)
 {
