@@ -22,10 +22,7 @@ PmergeMe::PmergeMe(int argc, char **argv)
 		_vector.push_back(value);
 		_list.push_back(value);
 	}
-
-	_jacobOrder = calcJacobsthal<std::vector<std::size_t> >(
-		_vector.size() / 2 + 1
-	);
+	_jacobOrder = calcJacobsthal<std::vector<std::size_t> >( _vector.size() / 2 + 1 );
 }
 
 PmergeMe &PmergeMe::operator=(const PmergeMe &other) {
@@ -130,11 +127,7 @@ void PmergeMe::run() const
 
 
 // Vector Implementation
-void PmergeMe::insertVector(
-	std::vector<int> &chain,
-	int value,
-	int limitValue
-)
+void PmergeMe::insertVector(std::vector<int> &chain, int value, int limitValue)
 {
 	std::size_t high = 0;
 
@@ -156,10 +149,7 @@ void PmergeMe::insertVector(
 	chain.insert(chain.begin() + low, value);
 }
 
-void PmergeMe::insertVectorNoLimit(
-	std::vector<int> &chain,
-	int value
-)
+void PmergeMe::insertVectorNoLimit(std::vector<int> &chain, int value)
 {
 	std::size_t low = 0;
 	std::size_t high = chain.size();
@@ -177,10 +167,7 @@ void PmergeMe::insertVectorNoLimit(
 	chain.insert(chain.begin() + low, value);
 }
 
-void PmergeMe::sortVector(
-	std::vector<int> &numbers,
-	const std::vector<std::size_t> &jacobOrder
-)
+void PmergeMe::sortVector(std::vector<int> &numbers, const std::vector<std::size_t> &jacobOrder)
 {
 	if (numbers.size() < 2)
 		return;
@@ -234,8 +221,7 @@ void PmergeMe::sortVector(
 		}
 	}
 
-	for (std::vector<std::size_t>::const_iterator it = jacobOrder.begin();
-		 it != jacobOrder.end(); ++it)
+	for (std::vector<std::size_t>::const_iterator it = jacobOrder.begin(); it != jacobOrder.end(); ++it)
 	{
 		if (*it < pend.size())
 			insertVector(chain, pend[*it].small, pend[*it].big);
@@ -249,11 +235,7 @@ void PmergeMe::sortVector(
 
 
 // List implementation
-std::list<int>::iterator PmergeMe::lowerBoundList(
-	std::list<int> &chain,
-	int value,
-	std::list<int>::iterator end
-)
+std::list<int>::iterator PmergeMe::lowerBoundList(std::list<int> &chain, int value, std::list<int>::iterator end)
 {
 	std::list<int>::iterator first = chain.begin();
 	std::size_t count = std::distance(first, end);
@@ -278,11 +260,7 @@ std::list<int>::iterator PmergeMe::lowerBoundList(
 	return first;
 }
 
-void PmergeMe::insertList(
-	std::list<int> &chain,
-	int value,
-	int limitValue
-)
+void PmergeMe::insertList(std::list<int> &chain, int value, int limitValue)
 {
 	std::list<int>::iterator limit = chain.begin();
 
@@ -293,19 +271,13 @@ void PmergeMe::insertList(
 	chain.insert(pos, value);
 }
 
-void PmergeMe::insertListNoLimit(
-	std::list<int> &chain,
-	int value
-)
+void PmergeMe::insertListNoLimit(std::list<int> &chain, int value)
 {
 	std::list<int>::iterator pos = lowerBoundList(chain, value, chain.end());
 	chain.insert(pos, value);
 }
 
-void PmergeMe::sortList(
-	std::list<int> &numbers,
-	const std::vector<std::size_t> &jacobOrder
-)
+void PmergeMe::sortList(std::list<int> &numbers, const std::vector<std::size_t> &jacobOrder)
 {
 	if (numbers.size() < 2)
 		return;
@@ -344,7 +316,6 @@ void PmergeMe::sortList(
 			pair.small = second;
 			pair.big = first;
 		}
-
 		pairs.push_back(pair);
 		bigs.push_back(pair.big);
 	}
@@ -354,13 +325,12 @@ void PmergeMe::sortList(
 	std::list<int> chain = bigs;
 	std::list<IntPair> pend;
 
-	for (std::list<int>::iterator bit = bigs.begin();
-		 bit != bigs.end(); ++bit)
+	for (std::list<int>::iterator it = bigs.begin(); it != bigs.end(); ++it)
 	{
 		for (std::list<IntPair>::iterator pit = pairs.begin();
 			 pit != pairs.end(); ++pit)
 		{
-			if (pit->big == *bit)
+			if (pit->big == *it)
 			{
 				pend.push_back(*pit);
 				break;
